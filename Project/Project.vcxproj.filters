@@ -19,25 +19,25 @@
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>資源檔</Filter>
-    </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>資源檔</Filter>
+      <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Capture.cpp">
-      <Filter>資源檔</Filter>
+      <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>資源檔</Filter>
-    </ClCompile>
-    <ClCompile Include="Encoder.cpp">
-      <Filter>資源檔</Filter>
+    <ClCompile Include="Controller.cpp">
+      <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Decoder.cpp">
-      <Filter>資源檔</Filter>
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Encoder.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Router.cpp">
-      <Filter>資源檔</Filter>
+      <Filter>來源檔案</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
