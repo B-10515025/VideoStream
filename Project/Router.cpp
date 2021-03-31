@@ -1,4 +1,3 @@
-#pragma warning(disable : 4996)
 #include "Router.h"
 #include "Controller.h"
 Router::Router(Decoder* decoder_,Controller* controller_) {
