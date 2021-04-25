@@ -7,9 +7,9 @@ bool Render::wait() {
 	return getSize() == 0;
 }
 void Render::process() {
-	cv::Mat frame;
+	shared_ptr<cv::Mat> frame;
 	frame = getData();
-	cv::imshow(name, frame);
+	cv::imshow(name, *frame);
 	cv::waitKey(1);
 }
 void Render::end() {

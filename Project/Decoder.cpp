@@ -12,12 +12,11 @@ bool Decoder::wait() {
     return getSize() == 0;
 }
 void Decoder::process() {
-    cv::Mat frame;
-    H264 h264;
+    shared_ptr<cv::Mat> frame = make_shared<cv::Mat>();
+    shared_ptr<H264> h264;
     h264 = getData();
-    if (decode(h264.data, h264.size, frame) == 0) {
+    if (decode(h264->data, h264->size, *frame) == 0) {
         render->receive(frame);
-        delete[] h264.data;
     }
     else {
         cout << "decode failed.\n";

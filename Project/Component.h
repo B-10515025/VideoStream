@@ -4,11 +4,12 @@
 #include <mutex>
 #include <queue>
 #include <iostream>
+#include <memory>
 using namespace std;
 template<class queueType>
 class Component {
 public:
-	void receive(queueType input) {
+	void receive(shared_ptr<queueType> input) {
 		if (active) {
 			lock_guard<mutex> lock(sign);
 			pushData(input);
@@ -47,13 +48,13 @@ protected:
 		end();
 		delete task;
 	}
-	void pushData(queueType input) {
+	void pushData(shared_ptr<queueType> input) {
 		lock_guard<mutex> lock(mtx);
 		data.push(input);
 	}
-	queueType getData() {
+	shared_ptr<queueType> getData() {
 		lock_guard<mutex> lock(mtx);
-		queueType ret;
+		shared_ptr<queueType> ret;
 		ret = data.front();
 		data.pop();
 		return ret;
@@ -73,5 +74,5 @@ private:
 	thread *task;
 	condition_variable condition;
 	mutex mtx, sign;
-	queue<queueType> data;
+	queue<shared_ptr<queueType>> data;
 };

@@ -15,14 +15,14 @@ bool Encoder::wait() {
     return getSize() == 0;
 }
 void Encoder::process() {
-    cv::Mat frame;
+    shared_ptr<cv::Mat> frame;
     frame = getData();
-    if (encode(frame)) {
-        H264 h264;
-        h264.size = avPacket->size;
-        h264.data = new uint8_t[avPacket->size];
-        if (h264.data) {
-            memcpy(h264.data, avPacket->data, h264.size);
+    if (encode(*frame)) {
+        shared_ptr<H264> h264 = make_shared<H264>();
+        h264->size = avPacket->size;
+        h264->data = new uint8_t[h264->size];
+        if (h264->data) {
+            memcpy(h264->data, avPacket->data, h264->size);
             router->receive(h264);
         }
         else {

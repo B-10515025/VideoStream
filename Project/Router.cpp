@@ -55,10 +55,10 @@ bool Router::wait() {
         return getSize() == 0;
     }
     else {
-        H264 h264;
-        if (recv(upStream, (char*)&h264.size, sizeof(h264.size), MSG_WAITALL)) {
-            h264.data = new uint8_t[h264.size];
-            if (recv(upStream, (char*)h264.data, h264.size, MSG_WAITALL)) {
+        shared_ptr<H264> h264 = make_shared<H264>();
+        if (recv(upStream, (char*)&h264->size, sizeof(h264->size), MSG_WAITALL)) {
+            h264->data = new uint8_t[h264->size];
+            if (recv(upStream, (char*)h264->data, h264->size, MSG_WAITALL)) {
                 pushData(h264);
             }
             else {
@@ -73,16 +73,17 @@ bool Router::wait() {
 }
 void Router::process() {
     lock_guard<mutex> lock(vecMtx);
-    H264 h264;
+    shared_ptr<H264> h264;
     if (getSize()) {
         h264 = getData();
         char* buffer;
-        buffer = new char[sizeof(h264.size) + h264.size];
-        memcpy(buffer, &h264.size, sizeof(h264.size));
-        memcpy(buffer + sizeof(h264.size), h264.data, h264.size);
+        buffer = new char[sizeof(h264->size) + h264->size];
+        int size = h264->size;
+        memcpy(buffer, &size, sizeof(size));
+        memcpy(buffer + sizeof(size), h264->data, size);
         int i = 0, bytes;
         while (i < downStream.size()) {
-            bytes = send(downStream[i], buffer, sizeof(h264.size) + h264.size, 0);
+            bytes = send(downStream[i], buffer, sizeof(size) + size, 0);
             if (bytes < 0) {
                 downStream.erase(downStream.begin() + i);
                 cout << "socket: " << downStream[i] << " disconnect.\n";

@@ -9,6 +9,12 @@ struct EncodeConfig {
 struct H264 {
     int size;
     uint8_t* data;
+    ~H264() {
+        if (data) {
+            delete[] data;
+        }
+        data = nullptr;
+    }
 };
 enum PacketType {
     CONNECT, VIDEO
